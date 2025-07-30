@@ -67,6 +67,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
+    implementation("androidx.fragment:fragment:1.8.8")
+    implementation("androidx.fragment:fragment-ktx:1.8.8")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
