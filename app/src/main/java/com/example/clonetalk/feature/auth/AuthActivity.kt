@@ -1,24 +1,15 @@
 package com.example.clonetalk.feature.auth
 
 import LoginFragment
-import LoginScreen
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.clonetalk.R
-import com.example.clonetalk.ui.theme.CloneTalkTheme
 
 class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{
-            CloneTalkTheme {
-                val viewModel: LoginViewModel = viewModel()
-                LoginScreen(viewModel = viewModel)
-            }
-        }
+        //컴포즈와 frag 둘 다 호출하는 의미 없어서 컴포즈 코드 제거.
         setContentView(R.layout.activity_auth)
 
         // 최초 진입 시 LoginFragment를 붙임
@@ -29,3 +20,4 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 }
+//
