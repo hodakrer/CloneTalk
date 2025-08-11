@@ -1,6 +1,9 @@
 package com.example.clonetalk.feature.auth
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,22 +11,46 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.clonetalk.R
+import com.example.clonetalk.ui.theme.CloneTalkTheme
 
 class SignupFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val viewModel: SignupViewModel by viewModels()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext())
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = NavHostFragment.findNavController(this)
+
+        (view as ComposeView).setContent {
+            CloneTalkTheme {
+                SignupScreen(viewModel = viewModel, navController = navController)
+            }
+        }
+
+    }
+
+
 }
 
 @Composable
-fun SignupScreen(viewModel: SignupViewModel){
+fun SignupScreen(viewModel: SignupViewModel, navController: NavController){
     var phoneNumber by remember {mutableStateOf("")}
     var password by remember {mutableStateOf("")}
     var signupResult by viewModel.signupResult
@@ -33,7 +60,9 @@ fun SignupScreen(viewModel: SignupViewModel){
         modifier = Modifier.fillMaxSize()
     ){
         Column(
-            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
             Image(painter = painterResource(id = R.drawable.kakaotalk_logo),
                 contentDescription = "KakaoTalk Logo",
@@ -57,8 +86,11 @@ fun SignupScreen(viewModel: SignupViewModel){
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = {navController.navigate(R.id.action_signup_to_login)}){Text("로그인")}
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {viewModel.signup(phoneNumber, password)}){ Text("회원가입")}
             Spacer(modifier = Modifier.height(8.dp))
+
 
         }
     }

@@ -1,4 +1,5 @@
-import com.example.clonetalk.feature.auth.LoginViewModel
+package com.example.clonetalk.feature.auth
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,27 +20,37 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.example.clonetalk.R
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import com.example.clonetalk.ui.theme.CloneTalkTheme
+import androidx.navigation.fragment.findNavController
 
 class LoginFragment : Fragment() {
+
     private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                CloneTalkTheme {
-                    LoginScreen(viewModel = viewModel)
-                }
+        return ComposeView(requireContext())
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
+
+        (view as ComposeView).setContent {
+            CloneTalkTheme {
+                LoginScreen(viewModel = viewModel, navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel) {
+fun LoginScreen(viewModel: LoginViewModel,
+                navController: NavController) {
     var phoneNumber by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var keepLoggedIn by remember { mutableStateOf(false) }
@@ -96,7 +107,7 @@ fun LoginScreen(viewModel: LoginViewModel) {
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(onClick = {
-                // TODO: 회원가입 화면 이동
+                navController.navigate(R.id.action_login_to_signup)
             }) {
                 Text("회원가입")
             }

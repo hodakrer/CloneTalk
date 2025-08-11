@@ -69,6 +69,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("androidx.fragment:fragment:1.8.8")
     implementation("androidx.fragment:fragment-ktx:1.8.8")
+    implementation("androidx.navigation:navigation-fragment:2.7.3")
+    implementation("androidx.navigation:navigation-compose:2.7.3")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
